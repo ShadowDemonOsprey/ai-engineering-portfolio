@@ -280,3 +280,30 @@ Your Name
 ## License
 
 This project is created for learning and demonstration purposes.
+
+---
+
+## Run with Docker
+
+### Build Docker Image
+
+From this folder:
+
+```bash
+docker build -t text-classifier .
+```
+
+### Run Container
+
+```bash
+docker run text-classifier
+```
+
+The container will execute the text classification model.
+
+## Example Output
+
+```text
+Model training completed.
+Prediction completed.
+```
