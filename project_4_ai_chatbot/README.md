@@ -51,3 +51,52 @@ POST /chat
 - Add conversation memory
 - Add a web interface
 - Deploy as a cloud service
+
+---
+
+## Run with Docker
+
+### Build Docker Image
+
+From this folder:
+
+```bash
+docker build -t ai-chatbot .
+```
+
+### Run Container
+
+```bash
+docker run -p 8000:8000 ai-chatbot
+```
+
+The API will be available at:
+
+```text
+http://127.0.0.1:8000
+```
+
+### Test Chatbot API
+
+Endpoint:
+
+```text
+POST /chat
+```
+
+Request:
+
+```json
+{
+  "message": "hello"
+}
+```
+
+Response:
+
+```json
+{
+  "user": "hello",
+  "assistant": "Hello! How can I help you today?"
+}
+```
