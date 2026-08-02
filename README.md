@@ -7,6 +7,45 @@ This repository contains practical AI and Machine Learning projects demonstratin
 
 ---
 
+## Repository Structure
+
+```text
+FIRST_AI_PROJECT
+│
+├── project_1_text_classifier
+│   ├── Model training
+│   ├── Text preprocessing
+│   └── Classification prediction
+│
+├── project_2_sentiment_analysis
+│   ├── FastAPI application
+│   ├── Sentiment prediction endpoint
+│   └── REST API service
+│
+├── project_3_ml_pipeline
+│   ├── Data processing
+│   ├── Feature engineering
+│   ├── Model training
+│   └── Evaluation
+│
+├── project_4_ai_chatbot
+│   ├── FastAPI chatbot API
+│   ├── User message processing
+│   └── AI response generation
+│
+├── .github
+│   └── workflows
+│       └── python-check.yml
+│
+├── README.md
+├── PROFILE.md
+├── PORTFOLIO.md
+├── CONTRIBUTING.md
+├── CHANGELOG.md
+├── LICENSE
+└── .gitignore
+```
+
 # Projects Overview
 
 | Project | Description | Technologies |
