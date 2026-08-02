@@ -1,0 +1,33 @@
+name: Python Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          pip install -r project_1_text_classifier/requirements.txt
+          pip install -r project_2_sentiment_analysis/requirements.txt
+          pip install -r project_3_ml_pipeline/requirements.txt
+          pip install -r project_4_ai_chatbot/requirements.txt
+
+      - name: Check Python files
+        run: |
+          python -m compileall .
