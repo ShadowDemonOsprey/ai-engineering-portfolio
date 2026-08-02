@@ -23,8 +23,8 @@ Completed first working version.
 
 ```bash
 conda activate ai-project
+```
 
----
 
 # Project 2: Sentiment Analysis API
 
@@ -49,23 +49,29 @@ A simple REST API that analyzes text sentiment.
 
 Send a GET request to the prediction endpoint:
 
-```text
+```http
 GET /predict?text=I%20love%20this%20product
+```
 
 ### Explanation
+```
 GET → HTTP request method
 /predict → API endpoint for sentiment prediction
 text= → input text sent to the AI system
 %20 → represents a space in a URL
-
+```
 #### Example input:
+```text
 I love this product
+```
 
 The API receives the text, analyzes it, and returns the sentiment prediction.
 
+---
 ### Response
-
+```json
 {
   "text": "I love this product",
   "sentiment": "positive"
 }
+```
