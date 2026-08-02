@@ -16,3 +16,10 @@ Build a machine learning model that classifies text into categories.
 
 ### Status
 Completed first working version.
+
+## How to Run
+
+1. Create and activate the conda environment:
+
+```bash
+conda activate ai-project
