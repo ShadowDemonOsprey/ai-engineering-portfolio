@@ -211,3 +211,155 @@ POST /chat
 # Future Goals
 
 Continue building practical AI applications and developing skills toward an Applied AI Engineer role.
+
+---
+
+# How to Run Projects
+
+## Create Environment
+
+Create the conda environment:
+
+```bash
+conda create -n ai-project python=3.13
+```
+
+Activate the environment:
+
+```bash
+conda activate ai-project
+```
+
+---
+
+# Project 1: AI Text Classification
+
+Go to the project folder:
+
+```bash
+cd project_1_text_classifier
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Run the project:
+
+```bash
+python text_classifier.py
+```
+
+---
+
+# Project 2: Sentiment Analysis API
+
+Go to the project folder:
+
+```bash
+cd project_2_sentiment_analysis
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Start the API server:
+
+```bash
+uvicorn app:app --reload
+```
+
+Test the API:
+
+```text
+GET /predict?text=I%20love%20this%20product
+```
+
+Example:
+
+```text
+I love this product
+```
+
+Expected response:
+
+```json
+{
+  "text": "I love this product",
+  "sentiment": "positive"
+}
+```
+
+---
+
+# Project 3: Machine Learning Pipeline
+
+Go to the project folder:
+
+```bash
+cd project_3_ml_pipeline
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Run the pipeline:
+
+```bash
+python pipeline.py
+```
+
+---
+
+# Project 4: AI Chatbot Assistant
+
+Go to the project folder:
+
+```bash
+cd project_4_ai_chatbot
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Start the chatbot API:
+
+```bash
+uvicorn app:app --reload
+```
+
+Test the chatbot:
+
+Endpoint:
+
+```text
+POST /chat
+```
+
+Request:
+
+```json
+{
+  "message": "hello"
+}
+```
+
+Response:
+
+```json
+{
+  "user": "hello",
+  "assistant": "Hello! How can I help you today?"
+}
+```
