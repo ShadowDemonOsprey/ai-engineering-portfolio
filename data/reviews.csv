@@ -1,0 +1,7 @@
+text,label
+"I love this product",positive
+"This is amazing",positive
+"I hate this product",negative
+"This is terrible",negative
+"The quality is excellent",positive
+"The service was bad",negative

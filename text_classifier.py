@@ -1,29 +1,25 @@
+import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 
-texts = [
-    "I love this product",
-    "This is amazing",
-    "I hate this product",
-    "This is terrible"
-]
+# Load dataset
+data = pd.read_csv("data/reviews.csv")
 
-labels = [
-    "positive",
-    "positive",
-    "negative",
-    "negative"
-]
+texts = data["text"]
+labels = data["label"]
 
+# Convert text into numbers
 vectorizer = CountVectorizer()
 X = vectorizer.fit_transform(texts)
 
+# Train model
 model = MultinomialNB()
 model.fit(X, labels)
 
-test = ["I love this amazing product"]
+# Test prediction
+test_text = ["This product is wonderful"]
 
-test_vector = vectorizer.transform(test)
+test_vector = vectorizer.transform(test_text)
 
 prediction = model.predict(test_vector)
 
