@@ -2,22 +2,52 @@
 
 ## Goal
 
-Build a simple AI chatbot application that can answer user questions.
+Build a simple AI chatbot API that processes user messages and generates responses.
 
 ## Features
 
-- User input processing
-- AI response generation
-- Conversation interface
-- Future integration with Large Language Models (LLMs)
+- REST API chatbot endpoint
+- User message processing
+- JSON response format
+- FastAPI backend
+- Ready for future LLM integration
 
 ## Technologies
 
 - Python
-- Natural Language Processing
 - FastAPI
-- AI APIs
+- Uvicorn
+- Pydantic
+- Natural Language Processing
 
-## Status
+## API Usage
 
-Planning stage.
+### Endpoint
+
+```text
+POST /chat
+```
+
+### Request Example
+
+```json
+{
+  "message": "hello"
+}
+```
+
+### Response Example
+
+```json
+{
+  "user": "hello",
+  "assistant": "Hello! How can I help you today?"
+}
+```
+
+## Future Improvements
+
+- Connect with Large Language Models (LLMs)
+- Add conversation memory
+- Add a web interface
+- Deploy as a cloud service
