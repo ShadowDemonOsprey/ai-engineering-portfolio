@@ -1,29 +1,20 @@
-# Import JSON to read saved embeddings
 import json
-
-# Import NumPy for vector processing
-import numpy as np
-
-# Import FAISS for similarity search
 import faiss
+import numpy as np
+import os
 
 
-# Create function to build FAISS index
 def create_index():
 
-    # Open embeddings file
     with open(
         "embeddings/embeddings.json",
         "r",
         encoding="utf-8"
     ) as f:
-
-        # Load embeddings data
         data = json.load(f)
 
 
-    # Convert embeddings into NumPy array
-    vectors = np.array(
+    embeddings = np.array(
         [
             item["embedding"]
             for item in data
@@ -32,38 +23,29 @@ def create_index():
     )
 
 
-    # Get embedding size
-    dimension = vectors.shape[1]
+    dimension = embeddings.shape[1]
 
 
-    # Create FAISS L2 index
     index = faiss.IndexFlatL2(
         dimension
     )
 
 
-    # Add vectors into FAISS
     index.add(
-        vectors
+        embeddings
     )
 
 
-    # Save FAISS index
+    os.makedirs(
+        "vector_store",
+        exist_ok=True
+    )
+
+
     faiss.write_index(
         index,
-        "vector_store/faiss.index"
+        "vector_store/index.faiss"
     )
 
 
-    # Print status
-    print(
-        "FAISS index updated:",
-        index.ntotal,
-        "vectors"
-    )
-
-
-# Run only when executing this file directly
-if __name__ == "__main__":
-
-    create_index()
+    print("FAISS index created")

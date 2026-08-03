@@ -1,63 +1,73 @@
-# Import SentenceTransformer to create embeddings
 from sentence_transformers import SentenceTransformer
-
-# Import JSON to save embeddings
 import json
 
-# Import FAISS index builder
 from vector_store.vector_store import create_index
 
+from pdf_loader import load_pdf
+from document_loader import load_document
 
-# Load embedding model
+
+
 model = SentenceTransformer(
     r"C:\models\all-MiniLM-L6-v2"
 )
 
 
-# Create function to generate embeddings
+
 def create_embeddings(file_path):
 
-    # Read uploaded document
-    with open(
-        file_path,
-        "r",
-        encoding="utf-8"
-    ) as file:
 
-        # Store document text
-        text = file.read()
+    if file_path.endswith(".pdf"):
+
+        text = load_pdf(
+            file_path
+        )
+
+    else:
+
+        text = load_document(
+            file_path
+        )
 
 
-    # Split document into chunks
-    chunks = text.split("\n\n")
+    chunk_size = 1000
 
 
-    # Store embedding results
+    chunks = [
+        text[i:i+chunk_size]
+        for i in range(
+            0,
+            len(text),
+            chunk_size
+        )
+    ]
+
+
+
     data = []
 
 
-    # Process every chunk
     for chunk in chunks:
 
-        # Ignore empty chunks
+
         if chunk.strip():
 
-            # Convert chunk into vector
-            embedding = model.encode(
+
+            vector = model.encode(
                 chunk
             ).tolist()
 
 
-            # Save text and vector
+
             data.append(
                 {
                     "text": chunk,
-                    "embedding": embedding
+                    "embedding": vector
                 }
             )
 
 
-    # Save embeddings
+
     with open(
         "embeddings/embeddings.json",
         "w",
@@ -70,5 +80,7 @@ def create_embeddings(file_path):
         )
 
 
-    # Rebuild FAISS index
     create_index()
+
+
+    return len(data)
