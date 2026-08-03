@@ -1,309 +1,148 @@
-# Text Classification using Naive Bayes
+# AI Text Classification
 
 ## Overview
 
-This project demonstrates a simple **Natural Language Processing (NLP)** text classification system using **Machine Learning**.
+A machine learning project that classifies text into categories using Natural Language Processing (NLP) techniques.
 
-The model learns from text data and predicts the category (label) of new text inputs. It uses:
+This project demonstrates a complete machine learning workflow:
 
-- **CountVectorizer** to convert text into numerical features
-- **Multinomial Naive Bayes** algorithm for text classification
-
-The example uses product reviews as input data and predicts the category of a new review.
-
----
-
-## Features
-
-- Load text data from a CSV file
-- Convert text into numerical vectors
-- Train a Naive Bayes classification model
-- Predict labels for new text input
-- Simple NLP machine learning pipeline
+- Data loading
+- Text preprocessing
+- Feature extraction
+- Model training
+- Prediction
 
 ---
 
 ## Project Structure
 
-```
-text-classification/
+```text
+project_1_text_classifier
 │
-├── data/
-│   └── reviews.csv          # Training dataset
+├── src
+│   └── text_classifier.py
 │
-├── classifier.py            # Main Python script
+├── data
+│   └── reviews.csv
 │
-├── requirements.txt         # Dependencies
+├── models
 │
-└── README.md                # Documentation
+├── tests
+│   └── test_classifier.py
+│
+├── logs
+│
+├── requirements.txt
+├── Dockerfile
+└── README.md
 ```
 
 ---
 
-## Technologies Used
+## Technologies
 
 - Python
+- NumPy
 - Pandas
 - Scikit-learn
-- Natural Language Processing (NLP)
-- Multinomial Naive Bayes
-
----
-
-## Installation
-
-### 1. Clone the repository
-
-```bash
-git clone <your-repository-url>
-```
-
-### 2. Navigate to the project directory
-
-```bash
-cd text-classification
-```
-
-### 3. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## Requirements
-
-Create a file named:
-
-```
-requirements.txt
-```
-
-Add the following:
-
-```
-pandas
-scikit-learn
-```
-
-Install:
-
-```bash
-pip install -r requirements.txt
-```
 
 ---
 
 ## Dataset
 
-The project uses a CSV dataset:
+Example dataset:
 
-```
-data/reviews.csv
-```
-
-The dataset should contain two columns:
-
-| Column | Description |
-|--------|-------------|
-| text | Review text |
-| label | Classification label |
-
-Example:
-
-```csv
+```text
 text,label
-"This product is amazing",positive
-"I dislike this product",negative
-"Very good quality",positive
-"Poor experience",negative
+"I love this product",positive
+"This is amazing",positive
+"I hate this product",negative
+"This is terrible",negative
+"The quality is excellent",positive
+"The service was bad",negative
 ```
 
 ---
 
-## How It Works
+## Machine Learning Workflow
 
-### 1. Load Dataset
-
-The program loads review data using Pandas.
-
-```python
-data = pd.read_csv("data/reviews.csv")
-```
-
----
-
-### 2. Convert Text into Numbers
-
-Machine learning models cannot directly understand text.
-
-`CountVectorizer` converts words into numerical feature vectors.
-
-Example:
-
-Input:
-
-```
-This product is wonderful
-```
-
-Converted into:
-
-```
-Numerical feature vector
-```
+1. Load dataset
+2. Clean and preprocess text
+3. Convert text into numerical features
+4. Train machine learning model
+5. Evaluate model
+6. Generate predictions
 
 ---
 
-### 3. Train the Model
+## Installation
 
-The project uses the Multinomial Naive Bayes algorithm.
-
-Training process:
-
-```python
-model.fit(X, labels)
-```
-
-The model learns patterns from the training reviews.
-
----
-
-### 4. Predict New Text
-
-A new review is transformed into a numerical vector and passed to the trained model.
-
-Example:
-
-```python
-test_text = ["This product is wonderful"]
-```
-
-Prediction:
-
-```
-Prediction: positive
-```
-
----
-
-## Running the Project
-
-Run the Python script:
+Activate the environment:
 
 ```bash
-python classifier.py
+conda activate ai-project
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Run Project
+
+Run the classifier:
+
+```bash
+python src/text_classifier.py
 ```
 
 Example output:
 
-```
+```text
 Prediction: positive
 ```
 
 ---
 
-## Machine Learning Concepts
+## Testing
 
-### Natural Language Processing (NLP)
+Run tests:
 
-NLP allows computers to process and understand human language.
-
-Applications:
-
-- Sentiment analysis
-- Spam detection
-- Chatbots
-- Search engines
-- Document classification
-
----
-
-### Bag of Words
-
-CountVectorizer uses the Bag-of-Words technique.
-
-It represents text based on the frequency of words.
-
-Example:
-
-Sentence:
-
-```
-I like this product
-```
-
-Features:
-
-```
-I
-like
-this
-product
+```bash
+pytest
 ```
 
 ---
 
-### Multinomial Naive Bayes
+## Docker
 
-Multinomial Naive Bayes is a probability-based machine learning algorithm commonly used for text classification.
-
-It is effective for:
-
-- Sentiment analysis
-- Email spam filtering
-- Document classification
-
----
-
-## Future Improvements
-
-Possible improvements:
-
-- Add train/test data split
-- Measure model accuracy
-- Use TF-IDF vectorization
-- Add more training examples
-- Create an API using FastAPI
-- Deploy the model using Docker
-- Integrate with a chatbot application
-
----
-
-## Author
-
-Your Name
-
----
-
-## License
-
-This project is created for learning and demonstration purposes.
-
----
-
-## Run with Docker
-
-### Build Docker Image
-
-From this folder:
+Build Docker image:
 
 ```bash
 docker build -t text-classifier .
 ```
 
-### Run Container
+Run Docker container:
 
 ```bash
 docker run text-classifier
 ```
 
-The container will execute the text classification model.
-
-## Example Output
+Example output:
 
 ```text
-Model training completed.
-Prediction completed.
+Prediction: positive
 ```
+
+---
+
+## Future Improvements
+
+- Save trained model using joblib
+- Add model evaluation metrics
+- Add REST API endpoint
+- Add automated testing pipeline
+- Deploy machine learning service
