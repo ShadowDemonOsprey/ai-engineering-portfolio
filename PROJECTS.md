@@ -161,3 +161,26 @@ JSON Output
 - Add retrieval augmented generation (RAG)
 - Deploy applications to cloud platforms
 - Add automated testing
+
+## Project 5: RAG AI Assistant
+
+A local Retrieval-Augmented Generation (RAG) AI Assistant built with:
+
+- Python
+- FastAPI
+- Sentence Transformers
+- FAISS
+- Ollama Qwen LLM
+
+Features:
+
+- PDF/TXT document upload
+- Text chunking
+- Embedding generation
+- Vector similarity search
+- Context retrieval
+- Local LLM answer generation
+
+Repository:
+
+project_5_rag_ai_assistant

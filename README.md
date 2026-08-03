@@ -17,11 +17,14 @@ I am a Mathematics graduate transitioning into Applied AI Engineering. I combine
 - Machine Learning
 - Deep Learning
 - Natural Language Processing
+- Large Language Models (LLMs)
+- Retrieval-Augmented Generation (RAG)
 - Scikit-learn
 - Pandas
 - NumPy
 - FastAPI
 - REST APIs
+- FAISS
 - Docker
 - Git
 - Linux
@@ -54,6 +57,13 @@ FIRST_AI_PROJECT
 │   ├── User message processing
 │   └── AI response generation
 │
+├── project_5_rag_ai_assistant
+│   ├── Document processing
+│   ├── Embedding generation
+│   ├── FAISS vector search
+│   ├── RAG pipeline
+│   └── Local LLM integration
+│
 ├── .github
 │   └── workflows
 │       └── python-check.yml
@@ -67,6 +77,8 @@ FIRST_AI_PROJECT
 └── .gitignore
 ```
 
+---
+
 # Projects Overview
 
 | Project | Description | Technologies |
@@ -75,6 +87,7 @@ FIRST_AI_PROJECT
 | Sentiment Analysis API | REST API for sentiment prediction | Python, FastAPI, Uvicorn |
 | Machine Learning Pipeline | Complete ML workflow from data preparation to evaluation | Pandas, NumPy, Scikit-learn |
 | AI Chatbot Assistant | Chatbot API for processing user messages | Python, FastAPI, NLP |
+| RAG AI Assistant | Document-based AI assistant using retrieval and generation | Python, FastAPI, FAISS, Sentence Transformers, Ollama |
 
 ---
 
@@ -127,7 +140,6 @@ A simple REST API that analyzes text sentiment.
 
 ![Sentiment API](screenshots/sentiment_api.png)
 
-
 ## Features
 
 - FastAPI web service
@@ -150,22 +162,7 @@ A simple REST API that analyzes text sentiment.
 GET /predict?text=I%20love%20this%20product
 ```
 
-### Explanation
-
-- `GET` → HTTP request method
-- `/predict` → API endpoint for sentiment prediction
-- `text=` → input text sent to the AI system
-- `%20` → represents a space in a URL
-
-### Example Input
-
-```text
-I love this product
-```
-
-The API receives the text, analyzes it, and returns the sentiment prediction.
-
-### Response
+### Example Response
 
 ```json
 {
@@ -183,7 +180,6 @@ The API receives the text, analyzes it, and returns the sentiment prediction.
 Build a complete machine learning workflow from data preparation to model evaluation.
 
 ![ML Pipeline](screenshots/ml_pipeline.png)
-
 
 ## Pipeline Steps
 
@@ -265,22 +261,268 @@ POST /chat
 
 ---
 
+# Project 5: RAG AI Assistant
+
+## Goal
+
+Build a complete Retrieval-Augmented Generation system that allows users to upload documents and ask questions using a local AI model.
+
+## Overview
+
+A local document-based AI assistant built with:
+
+- FastAPI
+- Sentence Transformers
+- FAISS vector database
+- Ollama Qwen LLM
+
+The system retrieves relevant document information before generating answers.
+
+---
+
+## Features
+
+- PDF document upload
+- TXT document upload
+- Document text extraction
+- Automatic text chunking
+- Embedding generation
+- FAISS semantic search
+- Context retrieval
+- Local LLM answer generation
+
+---
+
+## Architecture
+
+```text
+User Question
+       |
+       v
+Question Embedding
+       |
+       v
+FAISS Similarity Search
+       |
+       v
+Retrieve Relevant Context
+       |
+       v
+Context + Question
+       |
+       v
+Ollama Qwen LLM
+       |
+       v
+Generated Answer
+```
+
+---
+
+## Technologies
+
+- Python
+- FastAPI
+- Sentence Transformers
+- FAISS
+- Ollama
+- Qwen 2.5
+- PyTorch
+- NumPy
+- pypdf
+
+---
+
+## Project Structure
+
+```text
+project_5_rag_ai_assistant/
+
+│
+├── app.py
+├── pdf_loader.py
+├── document_loader.py
+├── embedding_generator.py
+├── rag_generator.py
+│
+├── data/
+│
+├── embeddings/
+│
+└── vector_store/
+    ├── vector_store.py
+    ├── search.py
+    └── index.faiss
+```
+
+---
+
+## API Endpoints
+
+### Upload Document
+
+```text
+POST /upload
+```
+
+Supported:
+
+```text
+.pdf
+.txt
+```
+
+Pipeline:
+
+```text
+Document
+    |
+    v
+Text Extraction
+    |
+    v
+Chunking
+    |
+    v
+Embedding Generation
+    |
+    v
+FAISS Index
+```
+
+---
+
+### Query Document
+
+```text
+GET /query
+```
+
+Example:
+
+```text
+/query?text=What is this document about?
+```
+
+Response:
+
+```json
+{
+  "question": "What is this document about?",
+  "answer": "Generated answer",
+  "sources": [
+    "Retrieved document chunks"
+  ]
+}
+```
+
+---
+
+## How to Run
+
+Go to the project folder:
+
+```bash
+cd project_5_rag_ai_assistant
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Start Ollama:
+
+```bash
+ollama run qwen2.5:0.5b
+```
+
+Start FastAPI:
+
+```bash
+uvicorn app:app --reload
+```
+
+Open:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+---
 # Skills Demonstrated
 
 - Python Programming
 - Machine Learning
+- Deep Learning
 - Natural Language Processing
+- Large Language Models (LLMs)
+- Retrieval-Augmented Generation (RAG)
+- Vector Database Development
+- FAISS Similarity Search
+- Embedding Engineering
 - Data Processing
 - Model Training and Evaluation
 - REST API Development
 - FastAPI Backend Development
+- Docker and Containerization
 - Git and GitHub Workflow
 
 ---
 
-# Future Goals
+# Future Improvements
 
-Continue building practical AI applications and developing skills toward an Applied AI Engineer role.
+## 1. Improve RAG Retrieval
+
+Possible improvements:
+
+- Better document chunking strategies
+- Metadata filtering
+- Hybrid keyword + vector search
+- Re-ranking models
+- Multi-document knowledge bases
+
+---
+
+## 2. Add Chat Interface
+
+Future architecture:
+
+```text
+User
+ |
+ v
+Web Chat Interface
+ |
+ v
+FastAPI Backend
+ |
+ v
+RAG Pipeline
+ |
+ v
+LLM Response
+```
+
+Future features:
+
+- Conversation history
+- Multiple user sessions
+- Streaming responses
+- Web-based interface
+
+---
+
+## 3. Add Cloud Deployment
+
+Possible deployment platforms:
+
+- AWS
+- Azure
+- Google Cloud
+- Hugging Face Spaces
+- Docker containers
 
 ---
 
@@ -294,7 +536,7 @@ Create the conda environment:
 conda create -n ai-project python=3.13
 ```
 
-Activate the environment:
+Activate:
 
 ```bash
 conda activate ai-project
@@ -304,7 +546,7 @@ conda activate ai-project
 
 # Project 1: AI Text Classification
 
-Go to the project folder:
+Go to project folder:
 
 ```bash
 cd project_1_text_classifier
@@ -316,7 +558,7 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Run the project:
+Run:
 
 ```bash
 python text_classifier.py
@@ -326,7 +568,7 @@ python text_classifier.py
 
 # Project 2: Sentiment Analysis API
 
-Go to the project folder:
+Go to project folder:
 
 ```bash
 cd project_2_sentiment_analysis
@@ -338,38 +580,23 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Start the API server:
+Start API:
 
 ```bash
 uvicorn app:app --reload
 ```
 
-Test the API:
+Test:
 
 ```text
 GET /predict?text=I%20love%20this%20product
-```
-
-Example:
-
-```text
-I love this product
-```
-
-Expected response:
-
-```json
-{
-  "text": "I love this product",
-  "sentiment": "positive"
-}
 ```
 
 ---
 
 # Project 3: Machine Learning Pipeline
 
-Go to the project folder:
+Go to project folder:
 
 ```bash
 cd project_3_ml_pipeline
@@ -381,7 +608,7 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Run the pipeline:
+Run:
 
 ```bash
 python pipeline.py
@@ -391,7 +618,7 @@ python pipeline.py
 
 # Project 4: AI Chatbot Assistant
 
-Go to the project folder:
+Go to project folder:
 
 ```bash
 cd project_4_ai_chatbot
@@ -403,13 +630,11 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Start the chatbot API:
+Start chatbot:
 
 ```bash
 uvicorn app:app --reload
 ```
-
-Test the chatbot:
 
 Endpoint:
 
@@ -417,21 +642,38 @@ Endpoint:
 POST /chat
 ```
 
-Request:
+---
 
-```json
-{
-  "message": "hello"
-}
+# Project 5: RAG AI Assistant
+
+Go to project folder:
+
+```bash
+cd project_5_rag_ai_assistant
 ```
 
-Response:
+Install dependencies:
 
-```json
-{
-  "user": "hello",
-  "assistant": "Hello! How can I help you today?"
-}
+```bash
+pip install -r requirements.txt
+```
+
+Start Ollama:
+
+```bash
+ollama run qwen2.5:0.5b
+```
+
+Start FastAPI:
+
+```bash
+uvicorn app:app --reload
+```
+
+API documentation:
+
+```text
+http://127.0.0.1:8000/docs
 ```
 
 ---
@@ -444,103 +686,53 @@ This repository includes Docker support for running AI projects in isolated cont
 
 - Project 1: AI Text Classification
 - Project 2: Sentiment Analysis API
-
----
-
-# Build and Run with Docker
-
-## Project 1: AI Text Classification
-
-Build Docker image:
-
-```bash
-docker build -t text-classifier ./project_1_text_classifier
-```
-
-Run the container:
-
-```bash
-docker run text-classifier
-```
-
-Example output:
-
-```text
-Prediction: positive
-```
-
----
-
-## Project 2: Sentiment Analysis API
-
-Build Docker image:
-
-```bash
-docker build -t sentiment-analysis ./project_2_sentiment_analysis
-```
-
-Run the API container:
-
-```bash
-docker run -p 8000:8000 sentiment-analysis
-```
-
-Test the API:
-
-```bash
-curl "http://localhost:8000/predict?text=I%20love%20this%20product"
-```
-
-Example response:
-
-```json
-{
-  "text": "I love this product",
-  "sentiment": "positive"
-}
-```
-
----
-
-# Docker Compose
-
-Start services:
-
-```bash
-docker compose up -d
-```
-
-Check services:
-
-```bash
-docker compose ps
-```
-
-View logs:
-
-```bash
-docker compose logs
-```
-
-Stop services:
-
-```bash
-docker compose down
-```
+- Project 5: RAG AI Assistant
 
 ---
 
 # Docker Environment
 
-- Python 3.13 Slim base image
-- Docker containerization
+- Python base images
+- Containerized AI applications
 - FastAPI API deployment
 - REST API services
-- Reproducible development environment
-- Docker Compose multi-service orchestration
+- Reproducible environments
+- Docker Compose support
 
-## Resume
+---
+
+# Final Goal
+
+Build production-ready AI systems combining:
+
+```text
+Machine Learning
+        +
+Deep Learning
+        +
+LLM Applications
+        +
+RAG Systems
+        +
+API Development
+        +
+Cloud Deployment
+```
+
+The goal is to develop practical AI engineering solutions for real-world applications.
+
+---
+
+# Resume
 
 You can view my resume here:
 
 [AI Engineer Resume](resume/Noah_Lin_Cruz_AI_Engineer_Resume.pdf)
+
+---
+
+# Author
+
+AI Engineering Portfolio Project
+
+Built as part of an Applied AI Engineer roadmap.
