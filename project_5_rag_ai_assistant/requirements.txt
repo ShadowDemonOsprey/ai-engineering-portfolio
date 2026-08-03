@@ -1,8 +1,9 @@
 fastapi
 uvicorn
-langchain
-langchain-community
-faiss-cpu
 sentence-transformers
-pydantic
-python-dotenv
+faiss-cpu
+torch
+numpy
+pypdf
+ollama
+python-multipart
