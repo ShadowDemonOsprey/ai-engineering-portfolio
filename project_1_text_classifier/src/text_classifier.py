@@ -1,3 +1,4 @@
+from model_utils import save_model
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
@@ -24,3 +25,4 @@ test_vector = vectorizer.transform(test_text)
 prediction = model.predict(test_vector)
 
 print("Prediction:", prediction[0])
+save_model(model, "models/model.pkl")
