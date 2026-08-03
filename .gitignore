@@ -15,3 +15,14 @@ env/
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
+
+# Machine Learning files
+models/
+logs/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment files
+.env
