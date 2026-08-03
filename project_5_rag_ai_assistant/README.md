@@ -1,40 +1,75 @@
 # Project 5: RAG AI Assistant
 
-A Retrieval-Augmented Generation (RAG) AI Assistant built with Python, FastAPI, and Sentence Transformers.
+A local **Retrieval-Augmented Generation (RAG) AI Assistant** built with Python, FastAPI, FAISS, Sentence Transformers, and Ollama.
 
-This project demonstrates how to build a document-based AI assistant using embeddings, semantic search, and a RAG pipeline architecture.
+This project demonstrates a complete document-based AI question-answering system:
+
+- Upload documents
+- Extract text
+- Split documents into chunks
+- Generate embeddings
+- Store vectors using FAISS
+- Retrieve relevant context
+- Generate answers using a local LLM
 
 ---
 
-# Project Structure
+# Project Architecture
 
-    project_5_rag_ai_assistant/
-    │
-    ├── app.py
-    ├── requirements.txt
-    ├── README.md
-    │
-    ├── documents/
-    │   └── sample.txt
-    │
-    ├── embeddings/
-    │   └── embeddings.json
-    │
-    └── models/
-        └── all-MiniLM-L6-v2
+```text
+project_5_rag_ai_assistant/
+
+│
+├── app.py
+├── pdf_loader.py
+├── document_loader.py
+├── embedding_generator.py
+├── rag_generator.py
+├── requirements.txt
+├── README.md
+│
+├── data/
+│   └── documents.txt
+│
+├── embeddings/
+│   └── embeddings.json
+│
+└── vector_store/
+    ├── vector_store.py
+    ├── search.py
+    └── index.faiss
+```
 
 ---
 
 # Features
 
-- Document loading
-- Text preprocessing
-- Text chunking
+- PDF document loading
+- TXT document loading
+- Automatic document chunking
 - Sentence Transformer embedding generation
-- Local Hugging Face model support
-- Semantic similarity search foundation
-- FastAPI backend
-- RAG architecture foundation
+- Local embedding model support
+- FAISS vector similarity search
+- Document upload API
+- Semantic retrieval
+- Local LLM answer generation
+- Complete RAG pipeline
+
+---
+
+# Technology Stack
+
+| Technology | Purpose |
+|---|---|
+| Python | Core programming language |
+| FastAPI | Backend API framework |
+| Uvicorn | ASGI server |
+| Sentence Transformers | Text embeddings |
+| FAISS | Vector database/search engine |
+| Ollama | Local LLM runtime |
+| Qwen 2.5 | Answer generation |
+| PyTorch | Deep learning framework |
+| NumPy | Vector processing |
 
 ---
 
@@ -46,7 +81,7 @@ This project demonstrates how to build a document-based AI assistant using embed
 conda create -n ai-project python=3.11
 ```
 
-Activate environment:
+Activate:
 
 ```bash
 conda activate ai-project
@@ -56,21 +91,22 @@ conda activate ai-project
 
 # Install Dependencies
 
-Install required packages:
-
 ```bash
 pip install -r requirements.txt
 ```
 
-Main dependencies:
+Main packages:
 
 ```text
 fastapi
 uvicorn
 sentence-transformers
+faiss-cpu
 torch
 numpy
-scikit-learn
+pypdf
+ollama
+python-multipart
 ```
 
 ---
@@ -83,34 +119,32 @@ This project uses:
 sentence-transformers/all-MiniLM-L6-v2
 ```
 
-## Model Purpose
-
-The Sentence Transformer model converts text into numerical vectors called embeddings.
+The model converts text into numerical vectors called embeddings.
 
 Example:
 
 Input:
 
 ```text
-"Artificial intelligence is changing the world."
+Artificial intelligence is changing the world.
 ```
 
 Output:
 
 ```text
-A vector representation of the text meaning.
+[0.0234, -0.0312, ...]
 ```
 
-These embeddings allow the system to compare the meaning of different texts.
+These vectors represent the semantic meaning of text.
 
 ---
 
-# Download Embedding Model
+# Local Embedding Model Setup
 
-Download the model locally from Hugging Face:
+Download:
 
 ```bash
-hf download sentence-transformers/all-MiniLM-L6-v2 --local-dir C:\models\all-MiniLM-L6-v2 --force-download
+hf download sentence-transformers/all-MiniLM-L6-v2 --local-dir C:\models\all-MiniLM-L6-v2
 ```
 
 Model location:
@@ -121,48 +155,42 @@ C:\models\all-MiniLM-L6-v2
 
 ---
 
-# Test Embedding Model
+# Ollama Setup
 
-Start Python:
+Download Qwen model:
 
 ```bash
-python
+ollama pull qwen2.5:0.5b
 ```
 
 Run:
 
-```python
-from sentence_transformers import SentenceTransformer
-
-model = SentenceTransformer(
-    r"C:\models\all-MiniLM-L6-v2"
-)
-
-print(model.encode("hello world")[:5])
+```bash
+ollama run qwen2.5:0.5b
 ```
 
-Expected output:
-
-```text
-[-0.03447726  0.03102325  0.00673501  0.02610896 -0.03936204]
-```
-
-Successful output means the embedding model is working correctly.
+The model generates answers using retrieved document context.
 
 ---
 
 # Running the Application
 
-Start FastAPI server:
+Start FastAPI:
 
 ```bash
 uvicorn app:app --reload
 ```
 
-Server address:
+Server:
 
 ```text
 http://127.0.0.1:8000
+```
+
+API documentation:
+
+```text
+http://127.0.0.1:8000/docs
 ```
 
 ---
@@ -171,19 +199,11 @@ http://127.0.0.1:8000
 
 ## Health Check
 
-Endpoint:
-
-```text
+```
 GET /
 ```
 
-Example:
-
-```text
-http://127.0.0.1:8000/
-```
-
-Response:
+Example response:
 
 ```json
 {
@@ -193,96 +213,94 @@ Response:
 
 ---
 
-## Create Embeddings
+## Upload Document
 
 Endpoint:
 
+```
+POST /upload
+```
+
+Supported files:
+
+```
+.txt
+.pdf
+```
+
+Pipeline:
+
 ```text
-GET /embeddings
+Document Upload
+        |
+        v
+Text Extraction
+        |
+        v
+Text Chunking
+        |
+        v
+Embedding Generation
+        |
+        v
+FAISS Index Creation
+```
+
+---
+
+## Ask Question
+
+Endpoint:
+
+```
+GET /query
 ```
 
 Example:
 
-```text
-http://127.0.0.1:8000/embeddings
+```
+/query?text=What is this document about?
 ```
 
-The endpoint performs:
+Response:
 
-```text
-Document
-    |
-    v
-Text Loading
-    |
-    v
-Text Chunking
-    |
-    v
-Embedding Generation
-    |
-    v
-Vector Storage
+```json
+{
+    "question": "What is this document about?",
+    "answer": "Generated answer from Qwen",
+    "sources": [
+        "Retrieved document chunks"
+    ]
+}
 ```
 
 ---
 
 # RAG Pipeline
 
-Retrieval-Augmented Generation workflow:
+Complete workflow:
 
 ```text
 User Question
-       |
-       v
-Convert Question Into Embedding
-       |
-       v
-Search Similar Document Embeddings
-       |
-       v
-Retrieve Relevant Context
-       |
-       v
-Generate Final Answer
+        |
+        v
+Question Embedding
+        |
+        v
+FAISS Similarity Search
+        |
+        v
+Retrieve Relevant Documents
+        |
+        v
+Context + Question
+        |
+        v
+Local Qwen LLM
+        |
+        v
+Final Answer
 ```
-
----
-
-# How Embeddings Work
-
-Example:
-
-Document 1:
-
-```text
-Machine learning is a branch of artificial intelligence.
-```
-
-Document 2:
-
-```text
-AI systems can learn patterns from data.
-```
-
-Although the words are different, their meanings are similar.
-
-The embedding model converts both texts into vectors and measures their similarity.
-
----
-
-# Technologies Used
-
-| Technology | Purpose |
-|---|---|
-| Python | Programming language |
-| FastAPI | API development |
-| Uvicorn | ASGI server |
-| Sentence Transformers | Text embedding generation |
-| Hugging Face | Model repository |
-| PyTorch | Deep learning framework |
-| NumPy | Numerical computation |
-| Scikit-learn | Similarity calculations |
 
 ---
 
@@ -290,102 +308,69 @@ The embedding model converts both texts into vectors and measures their similari
 
 ## Completed
 
-- [x] Project initialization
-- [x] Conda environment setup
-- [x] FastAPI application created
-- [x] Document loading implemented
-- [x] Document loading tested
-- [x] Sentence Transformer integration
-- [x] Hugging Face model downloaded
+- [x] FastAPI backend created
+- [x] Document loader implemented
+- [x] PDF extraction implemented
+- [x] Text chunking implemented
+- [x] Sentence Transformer embeddings
 - [x] Local embedding model configured
-- [x] Embedding generation tested
-- [x] API server running successfully
+- [x] FAISS vector database integrated
+- [x] Document upload endpoint
+- [x] Semantic search implemented
+- [x] Ollama LLM integration
+- [x] Complete RAG pipeline completed
 
 ---
 
 # Future Improvements
 
-## 1. Add Vector Database
+## Improve Retrieval
 
-Current:
+Possible upgrades:
 
-```text
-Documents
-    |
-    v
-Embeddings
-    |
-    v
-Storage
-```
+- Better chunking strategies
+- Metadata filtering
+- Hybrid search
+- Re-ranking models
 
-Future:
+---
 
-```text
-Documents
-    |
-    v
-Embeddings
-    |
-    v
-Vector Database
-    |
-    v
-Fast Similarity Search
-```
+## Add Chat Interface
 
-Possible technologies:
+Future architecture:
 
 ```text
-FAISS
-ChromaDB
-Pinecone
+User
+ |
+ v
+Web Chat UI
+ |
+ v
+FastAPI Backend
+ |
+ v
+RAG System
+ |
+ v
+LLM Response
 ```
 
 ---
 
-## 2. Add Document Upload
+## Deploy Application
 
-Future features:
+Possible deployment:
 
-- Upload PDF files
-- Upload text files
-- Extract document content
-- Automatically create embeddings
-
----
-
-## 3. Add Large Language Model
-
-Integrate:
-
-```text
-Llama
-Mistral
-DeepSeek
-OpenAI API
-```
-
-Pipeline:
-
-```text
-Question
-    |
-    v
-Retrieve Documents
-    |
-    v
-Send Context To LLM
-    |
-    v
-Generate Answer
-```
+- Docker
+- AWS
+- Azure
+- Hugging Face Spaces
 
 ---
 
-## 4. Build Complete RAG Chatbot
+# Final Goal
 
-Final goal:
+A complete AI knowledge assistant:
 
 ```text
 User
@@ -394,22 +379,21 @@ User
 Chat Interface
  |
  v
-RAG System
+FastAPI API
  |
- +--> Document Retrieval
+ v
+RAG Pipeline
+
+ +--> Document Processing
  |
- +--> Vector Search
+ +--> FAISS Retrieval
  |
- +--> LLM Response
+ +--> LLM Generation
+ |
+ v
+
+AI Answer
 ```
-
-Features:
-
-- Document upload
-- Question answering
-- Context retrieval
-- AI-generated responses
-- Conversation memory
 
 ---
 
