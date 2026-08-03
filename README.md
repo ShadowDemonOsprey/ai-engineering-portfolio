@@ -1,9 +1,30 @@
 # AI Engineering Portfolio
 
-Master's degree in Mathematics.  
-Self-studying Artificial Intelligence and Machine Learning.
+Welcome to my AI Engineering Portfolio.
 
-This repository contains practical AI and Machine Learning projects demonstrating skills in data processing, model development, API creation, and AI application development.
+I am a Mathematics graduate transitioning into Applied AI Engineering. I combine mathematical problem-solving skills with practical experience building machine learning models, APIs, and AI applications using Python.
+
+## About Me
+
+- 🎓 Master's Degree in Mathematics
+- 🤖 Focus: Applied AI Engineering / Machine Learning Engineering
+- 🐍 Programming: Python
+- 🚀 Interested in building and deploying real-world AI systems
+
+## Technical Skills
+
+- Python
+- Machine Learning
+- Deep Learning
+- Natural Language Processing
+- Scikit-learn
+- Pandas
+- NumPy
+- FastAPI
+- REST APIs
+- Docker
+- Git
+- Linux
 
 ---
 
@@ -63,6 +84,8 @@ FIRST_AI_PROJECT
 
 Build a machine learning model that classifies text into categories.
 
+![Text Classification](screenshots/text_classifier.png)
+
 ## Tools
 
 - Python
@@ -101,6 +124,9 @@ python text_classifier.py
 ## Overview
 
 A simple REST API that analyzes text sentiment.
+
+![Sentiment API](screenshots/sentiment_api.png)
+
 
 ## Features
 
@@ -156,6 +182,9 @@ The API receives the text, analyzes it, and returns the sentiment prediction.
 
 Build a complete machine learning workflow from data preparation to model evaluation.
 
+![ML Pipeline](screenshots/ml_pipeline.png)
+
+
 ## Pipeline Steps
 
 1. Data loading
@@ -183,6 +212,8 @@ Completed working pipeline.
 ## Goal
 
 Build a simple AI chatbot API that processes user messages and generates responses.
+
+![AI Chatbot](screenshots/ai_chatbot.png)
 
 ## Features
 

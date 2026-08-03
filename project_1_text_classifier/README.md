@@ -117,6 +117,26 @@ pytest
 
 ---
 
+## Model Evaluation
+
+Run evaluation:
+
+```bash
+python src/evaluate.py
+```
+
+Example output:
+
+```text
+Model Evaluation
+----------------
+Accuracy: 1.00
+```
+
+The evaluation script measures the model performance using accuracy score.
+
+---
+
 ## Docker
 
 Build Docker image:
