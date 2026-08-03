@@ -539,3 +539,8 @@ docker compose down
 - Reproducible development environment
 - Docker Compose multi-service orchestration
 
+## Resume
+
+You can view my resume here:
+
+[AI Engineer Resume](resume/Noah_Lin_Cruz_AI_Engineer_Resume.pdf)
