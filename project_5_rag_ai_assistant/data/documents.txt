@@ -1,0 +1,9 @@
+Artificial Intelligence (AI) is a field of computer science focused on creating systems that can perform tasks that normally require human intelligence.
+
+Machine Learning is a branch of AI that allows computers to learn patterns from data and make predictions without being explicitly programmed.
+
+Deep Learning uses artificial neural networks with multiple layers to learn complex patterns from large amounts of data.
+
+Natural Language Processing (NLP) allows computers to understand, process, and generate human language.
+
+Retrieval-Augmented Generation (RAG) combines information retrieval with language generation. It allows AI systems to search external knowledge sources and use retrieved information to generate better answers.
