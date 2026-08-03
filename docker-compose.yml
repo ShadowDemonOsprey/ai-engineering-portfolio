@@ -1,0 +1,14 @@
+services:
+  text-classifier:
+    build:
+      context: ./project_1_text_classifier
+    image: text-classifier
+    container_name: text-classifier
+
+  sentiment-api:
+    build:
+      context: ./project_2_sentiment_analysis
+    image: sentiment-analysis
+    container_name: sentiment-api
+    ports:
+      - "8000:8000"
